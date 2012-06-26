@@ -28,14 +28,25 @@ def login(username, password):
 def main():
     username, password = None, None
     try:
-        opts, args = getopt.getopt(sys.argv[1:])
+        opts, args = getopt.getopt(sys.argv[1:], 'u:p:', ['login', 'logout'])
     except getopt.GetoptError as err:
         print >> sys.stderr, str(err)
         sys.exit(1)
-    if username == None:
-        username = getpass("Username: ")
-    if password == None:
-        password = getpass("Password: ")
+    for opt, arg in opts:
+        if opt == '-u':
+            username = arg
+        if opt == '-p':
+            password = arg
+        if opt == '--logout':
+            logout()
+            sys.exit(0)
+        if opt == '--login':
+            login = True
+    if login:
+        if username == None:
+            username = getpass("Username: ")
+        if password == None:
+            password = getpass("Password: ")
 
 if __name__ == '__main__':
     main()
