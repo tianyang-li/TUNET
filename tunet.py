@@ -121,13 +121,23 @@ def login(username, password):
         break;
     """
 
+def check():
+    url = "http://net.tsinghua.edu.cn/cgi-bin/do_login"
+    data = "action=check_online"
+    req = urllib2.Request(url, data)
+    resp = urllib2.urlopen(req)
+    html = resp.read()
+    print html
+    return html
+
 def main():
     username, password = None, None
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'u:p:', ['login', 'logout'])
+        opts, args = getopt.getopt(sys.argv[1:], 'u:p:', ['login', 'logout', 'check'])
     except getopt.GetoptError as err:
         print >> sys.stderr, str(err)
         sys.exit(1)
+    set_login = False
     for opt, arg in opts:
         if opt == '-u':
             username = arg
@@ -137,11 +147,18 @@ def main():
             logout()
             sys.exit(0)
         if opt == '--login':
-            login = True
+            set_login = True
+        if opt == '--check':
+            check()
+            sys.exit(0)
+    if not set_login:
+        print >> sys.stderr, usage()
+        sys.exit(1)
     if username == None:
         username = getpass("Username: ")
     if password == None:
         password = getpass("Password: ")
+    login(username, password)
 
 if __name__ == '__main__':
     main()
