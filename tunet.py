@@ -154,9 +154,9 @@ def main():
     if not set_login:
         print >> sys.stderr, usage()
         sys.exit(1)
-    if username == None:
+    if !username:
         username = getpass("Username: ")
-    if password == None:
+    if !password:
         password = getpass("Password: ")
     login(username, password)
 
