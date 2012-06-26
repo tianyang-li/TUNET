@@ -31,7 +31,7 @@ def login(username, password):
     m = md5()
     m.update(password)
     password = m.hexdigest()
-    data="username="+username+"&password="+password+"&drop="+"0"+"&type=1&n=100"
+    data = "username=" + username + "&password=" + password + "&drop=" + "0" + "&type=1&n=100"
     req = urllib2.Request(url, data)
     resp = urllib2.urlopen(req)
     html = resp.read()
