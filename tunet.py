@@ -10,6 +10,10 @@ import sys
 import getopt
 import urllib2
 import urllib
+from getpass import getpass
+
+def usage():
+    print >> sys.stderr, "%s" % sys.argv[0],
 
 def logout():
     url = "http://net.tsinghua.edu.cn/cgi-bin/do_logout"
@@ -21,9 +25,19 @@ def logout():
 
 def login(username, password):
 
-def main(args):
+def main():
+    username, password = None, None
+    try:
+        opts, args = getopt.getopt(sys.argv[1:])
+    except getopt.GetoptError as err:
+        print >> sys.stderr, str(err)
+        sys.exit(1)
+    if username == None:
+        username = getpass("Username: ")
+    if password == None:
+        password = getpass("Password: ")
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main()
 
 
